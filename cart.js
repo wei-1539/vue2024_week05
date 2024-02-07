@@ -6,7 +6,6 @@ import userProductModal from './userProductModal.js'
 
 const url = 'https://vue3-course-api.hexschool.io/v2/';
 const path = 'wei_rio';
-// const path = 'casper-hexschool';
 
 
 const app = createApp({
@@ -50,7 +49,7 @@ const app = createApp({
             axios.get(api)
                 .then(res => {
                     this.products = res.data.products
-                    this.$refs.getProduct.isLoading=false;
+                    this.$refs.getProduct.isLoading = false;
                 })
                 .catch(err => {
                     alert(err.data.message)
@@ -82,7 +81,6 @@ const app = createApp({
             const api = `${url}/api/${path}/cart`
             axios.post(api, { data: order })
                 .then(res => {
-                    console.log(res)
                     this.loadingStatus.addCartLoading = "";
                     //當打開modal時加入購物車一起關閉modal
                     this.getCart();
@@ -99,9 +97,8 @@ const app = createApp({
             const api = `${url}/api/${path}/cart`
             axios.get(api)
                 .then(res => {
-                    // console.log(res.data)
                     this.carts = res.data.data;
-                    this.isLoading =false;
+                    this.isLoading = false;
                 })
                 .catch(err => {
                     alert(err.data.message)
@@ -116,7 +113,7 @@ const app = createApp({
             };
             this.loadingStatus.cartQtyLoading = item.id;
             // item.id 是購物車的id選項，判斷使哪隻在修改 跟『product_id』是不一樣的
-            const api = `${url}/api/${path}/cart/${item.id}`
+            const api = `${url}/api/${path}/cart/${item.id}`;
             axios.put(api, { data: order })
                 .then(res => {
                     this.getCart();
@@ -143,29 +140,27 @@ const app = createApp({
             this.loadingStatus.delCartLoading = 'clearAll';
             const api = `${url}/api/${path}/carts`
             axios.delete(api)
-            .then(res => {
-                this.getCart();
-                this.loadingStatus.delCartLoading = '';
-            })
-            .catch(err => {
-                alert(err.data.message)
-            })
+                .then(res => {
+                    this.getCart();
+                    this.loadingStatus.delCartLoading = '';
+                })
+                .catch(err => {
+                    alert(err.data.message)
+                })
         },
         onSubmit() {
-            console.log(this.form)
-            const api = `${url}/api/${path}/order`
-            axios.post(api,{data:this.form})
-            .then ((res)=>{
-                console.log(res)
-                alert(res.data.message)
-                // 清空表單內容
-                this.$refs.form.resetForm();
-                // 重新顯示購物車內容
-                this.getCart()
-            })
-            .catch((err)=>{
-                alert(err.data.message)
-            })
+            const api = `${url}/api/${path}/order`;
+            axios.post(api, { data: this.form })
+                .then((res) => {
+                    alert(res.data.message)
+                    // 清空表單內容
+                    this.$refs.form.resetForm();
+                    // 重新顯示購物車內容
+                    this.getCart()
+                })
+                .catch((err) => {
+                    alert(err.data.message)
+                })
         },
     },
     mounted() {
