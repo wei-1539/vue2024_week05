@@ -143,16 +143,29 @@ const app = createApp({
             this.loadingStatus.delCartLoading = 'clearAll';
             const api = `${url}/api/${path}/carts`
             axios.delete(api)
-                .then(res => {
-                    this.getCart();
-                    this.loadingStatus.delCartLoading = '';
-                })
-                .catch(err => {
-                    alert(err.data.message)
-                })
+            .then(res => {
+                this.getCart();
+                this.loadingStatus.delCartLoading = '';
+            })
+            .catch(err => {
+                alert(err.data.message)
+            })
         },
         onSubmit() {
             console.log(this.form)
+            const api = `${url}/api/${path}/order`
+            axios.post(api,{data:this.form})
+            .then ((res)=>{
+                console.log(res)
+                alert(res.data.message)
+                // 清空表單內容
+                this.$refs.form.resetForm();
+                // 重新顯示購物車內容
+                this.getCart()
+            })
+            .catch((err)=>{
+                alert(err.data.message)
+            })
         },
     },
     mounted() {
